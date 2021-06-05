@@ -1,0 +1,15 @@
+{
+  "extension": [
+    "ts"
+  ],
+  "spec": [
+    "src/**/*.it.spec.ts"
+  ],
+  "require": [
+    "ts-node/register",
+    "tsconfig-paths/register"
+  ],
+  "exclude": [
+    "view"
+  ]
+}

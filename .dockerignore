@@ -1,0 +1,10 @@
+node_modules
+logs
+dist
+coverage
+.nyc_output
+.idea
+npm-debug.log
+Dockerfile
+.dockerignore
+docker-compose.yml
