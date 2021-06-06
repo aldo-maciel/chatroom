@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-import { ModelEnum } from '@/app/enums/model.enum';
+import { ModelEnum } from '@/shared/enums/model.enum';
 import { Room } from '@/app/features/room/room';
 
 const schema = new Schema(
@@ -13,13 +13,9 @@ const schema = new Schema(
     capacity: {
       type: Number,
     },
-    owner: {
+    ownerId: {
       type: Schema.Types.ObjectId,
       required: true,
-    },
-    usersId: {
-      type: Schema.Types.ObjectId,
-      ref: ModelEnum.USER,
     },
   },
   {
@@ -29,9 +25,9 @@ const schema = new Schema(
   }
 );
 
-schema.virtual('users', {
+schema.virtual('owner', {
   ref: ModelEnum.USER,
-  localField: 'usersId',
+  localField: 'owner',
   foreignField: '_id',
   options: { sort: { username: -1 } },
 });

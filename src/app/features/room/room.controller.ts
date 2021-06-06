@@ -35,7 +35,7 @@ export class RoomController {
     try {
       const { userId } = req.params;
       const { roomName, capacity } = req.body;
-      const isInvalid = !(userId || roomName);
+      const isInvalid = !(userId && roomName);
 
       if (isInvalid) {
         const invalidField = userId ? 'roomName' : 'userId';
@@ -47,7 +47,7 @@ export class RoomController {
         );
       }
 
-      const room = { roomName, capacity, owner: userId } as Room;
+      const room = { roomName, capacity, ownerId: userId } as Room;
 
       const obj = await this.service.create(room);
 
@@ -80,7 +80,7 @@ export class RoomController {
 
       const room = await this.service.findById(id);
 
-      if (!room || room.owner.toString() !== userId) {
+      if (!room || room.ownerId.toString() !== userId) {
         return handleError(
           req,
           res,

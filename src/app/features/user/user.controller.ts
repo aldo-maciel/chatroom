@@ -10,7 +10,10 @@ import { User } from '@/app/features/user/user';
 export class UserController {
   private readonly service: UserService = new UserService();
 
-  public async findAll(req: Request, res: Response): Promise<void> {
+  public async findAll(
+    req: Request,
+    res: Response
+  ): Promise<Response | undefined> {
     logger.debug('finding users');
 
     try {
@@ -18,7 +21,7 @@ export class UserController {
 
       const { data, count } = await this.service.findAll(params);
 
-      res.json({ data, count });
+      return res.json({ data, count });
     } catch (error) {
       handleError(req, res, error);
     }

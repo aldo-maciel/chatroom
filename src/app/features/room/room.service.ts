@@ -18,6 +18,7 @@ export class RoomService {
       .skip(pagination.start)
       .limit(pagination.step)
       .sort(pagination.sort)
+      .populate('owner', { password: 0 })
       .lean(true);
 
     const count = await roomModel.countDocuments();
@@ -34,6 +35,15 @@ export class RoomService {
     logger.debug('Get room by id: ', id);
 
     return roomModel.findById(id, null, { lean: true }).exec();
+  }
+
+  /**
+   * Exists on the database
+   */
+  public async exists(id: string): Promise<boolean> {
+    logger.debug('Exists room: ', id);
+
+    return roomModel.exists({ _id: id });
   }
 
   /**
@@ -63,7 +73,7 @@ export class RoomService {
 
     try {
       const res = await roomModel.deleteOne({ _id: room });
-      logger.error('Removed count: ', res.deletedCount);
+      logger.debug('Removed count: ', res.deletedCount);
 
       return res.deletedCount || 0;
     } catch (error) {

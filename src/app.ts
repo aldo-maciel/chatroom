@@ -5,9 +5,8 @@ import cors from 'cors';
 import handleError from '@/shared/errors/error.service';
 import { RoutesMiddleware } from '@/config/router.config';
 import { MongoConfig } from '@/config/mongo.config';
-import { testDbUtils } from '@/config/mongo-test.config';
 
-const isTestEnvironment = process.env.NODE_ENV === 'test';
+const isNotTestEnvironment = process.env.NODE_ENV !== 'test';
 
 class App {
   public app: Application = express();
@@ -23,9 +22,7 @@ class App {
     this.app.use(handleError);
     this.app.use(express.static(__dirname + '/../view/dist/'));
 
-    if (isTestEnvironment) {
-      await testDbUtils.mongoSetup();
-    } else {
+    if (isNotTestEnvironment) {
       await new MongoConfig().mongoSetup();
     }
     new RoutesMiddleware().config(this.app);

@@ -28,6 +28,15 @@ export class UserService {
   }
 
   /**
+   * Exists on the database
+   */
+  public exists(id: string): Promise<boolean> {
+    logger.debug('Exists room: ', id);
+
+    return userModel.exists({ _id: id });
+  }
+
+  /**
    * Create new data on the database
    */
   public async create(user: User): Promise<User> {
@@ -35,7 +44,7 @@ export class UserService {
 
     try {
       const res = await userModel.create(user);
-      logger.debug('Room created successfully: ', res.username);
+      logger.debug('Chatroom created successfully: ', res.username);
 
       return res;
     } catch (error) {

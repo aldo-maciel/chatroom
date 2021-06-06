@@ -3,10 +3,10 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 
 import logger from '@/shared/logger.service';
 
-class MongoTestConfig {
+export default class MongoTestConfig {
   private server = new MongoMemoryServer();
 
-  async mongoSetup() {
+  async mongoSetup(): Promise<void> {
     const mongooseOpts = {
       useNewUrlParser: true,
       useFindAndModify: false,
@@ -32,13 +32,13 @@ class MongoTestConfig {
     }
   }
 
-  async stop() {
+  async stop(): Promise<void> {
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
     await this.server.stop();
   }
 
-  async cleanup() {
+  async cleanup(): Promise<void> {
     const collections = mongoose.connection.collections;
 
     for (const key in collections) {
@@ -47,5 +47,3 @@ class MongoTestConfig {
     }
   }
 }
-
-export const testDbUtils = new MongoTestConfig();

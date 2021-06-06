@@ -5,8 +5,7 @@ export interface Room extends Document {
   readonly createAt: Date;
   readonly updateAt: Date;
   roomName: string;
-  usersId: string[];
-  users: User[];
+  owner: User;
   capacity: number;
-  owner: string;
+  ownerId: string;
 }

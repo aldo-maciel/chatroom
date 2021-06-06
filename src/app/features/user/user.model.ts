@@ -1,6 +1,6 @@
 import { model, Schema } from 'mongoose';
 
-import { ModelEnum } from '@/app/enums/model.enum';
+import { ModelEnum } from '@/shared/enums/model.enum';
 import { User } from '@/app/features/user/user';
 import crypto from 'crypto';
 
