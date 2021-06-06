@@ -10,6 +10,7 @@ class MongoTestConfig {
     const mongooseOpts = {
       useNewUrlParser: true,
       useFindAndModify: false,
+      useCreateIndex: true,
       useUnifiedTopology: true,
     };
 

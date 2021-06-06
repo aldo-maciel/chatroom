@@ -10,22 +10,22 @@ import {
 export const handleError = (
   req: Request,
   res: Response,
-  err: Record<string, string> | string = {},
+  err?: Error | string,
   message?: string
 ) => {
   if (typeof err === 'string') {
     return res.status(BAD_REQUEST).json({ message: err });
   }
 
-  if (err.name === 'NotFound') {
+  if (err?.name === 'NotFound') {
     return res.status(NOT_FOUND).json({ message: message || err.message });
   }
 
-  if (err.name === 'ValidationError') {
+  if (err?.name === 'ValidationError') {
     return res.status(BAD_REQUEST).json({ message: message || err.message });
   }
 
-  if (err.name === 'UnauthorizedError') {
+  if (err?.name === 'UnauthorizedError') {
     return res
       .status(UNAUTHORIZED)
       .json({ message: message || 'Invalid Token' });
@@ -33,13 +33,13 @@ export const handleError = (
 
   return res
     .status(INTERNAL_SERVER_ERROR)
-    .json({ message: message || err.message });
+    .json({ message: message || err?.message });
 };
 
 export default (
   req: Request,
   res: Response,
   next: NextFunction | null,
-  err?: Record<string, string>,
+  err?: Error | string,
   message?: string
 ) => handleError(req, res, err, message);
