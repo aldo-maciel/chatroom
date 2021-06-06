@@ -1,7 +1,7 @@
 import { expect, request, use } from 'chai';
 import chaiHttp from 'chai-http';
 
-import http from './../../server';
+import http from '../../../server';
 import { testDbUtils } from '@/config/mongo-test.config';
 
 use(chaiHttp);
