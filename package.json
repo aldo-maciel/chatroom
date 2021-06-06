@@ -5,7 +5,7 @@
   "author": "Aldo Bernardes Maciel",
   "scripts": {
     "build": "tsc && tscpaths -p tsconfig.json -s ./src",
-    "dev": "ts-node -r tsconfig-paths/register src/server.ts",
+    "dev": "nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register src/server.ts' -e ts",
     "start": "NODE_ENV=production node ./dist/server.js --open",
     "prod": "npm run build && npm run start",
     "test": "NODE_ENV=test PORT=3052 mocha",
@@ -50,7 +50,7 @@
     "eslint-plugin-prettier": "3.4.0",
     "mocha": "8.4.0",
     "mongodb-memory-server": "6.6.1",
-    "nodemon": "2.0.4",
+    "nodemon": "2.0.7",
     "nyc": "15.1.0",
     "prettier": "2.0.5",
     "ts-mocha": "7.0.0",

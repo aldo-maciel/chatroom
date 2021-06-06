@@ -4,7 +4,7 @@ MAINTAINER Aldo Bernardes Maciel
 # build view
 WORKDIR /app/view
 COPY view/*.json /app/view/
-COPY view/.eslintrc.js /app/view/
+COPY .eslintrc.js /app/view/
 COPY .prettierrc  /app/view/
 RUN apk --no-cache add g++ gcc libgcc libstdc++ linux-headers make python
 RUN npm install --quiet node-gyp -g
