@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { ShortenedUrlController } from './user.controller';
+import { UserController } from './user.controller';
 
 export class UserRouter {
   private router: Router = Router();
   private path = '/users';
-  private readonly ctrl: ShortenedUrlController = new ShortenedUrlController();
+  private readonly ctrl: UserController = new UserController();
 
   constructor() {
     this.createRoutes();

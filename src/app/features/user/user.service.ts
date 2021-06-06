@@ -1,6 +1,6 @@
 import logger from '@/shared/logger.service';
 import { userModel } from './user.model';
-import { User } from '@/app/user/user';
+import { User } from '@/app/features/user/user';
 import { IPagination, Pagination } from '@/shared/pagination/pagination';
 
 export class UserService {
@@ -35,7 +35,7 @@ export class UserService {
 
     try {
       const res = await userModel.create(user);
-      logger.debug('User created successfully: ', res.username);
+      logger.debug('Room created successfully: ', res.username);
 
       return res;
     } catch (error) {
