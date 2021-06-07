@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
 import httpStatusCode from 'http-status-codes';
+import { Socket } from 'socket.io';
+import {
+  EventNames,
+  EventParams,
+  EventsMap,
+} from 'socket.io/dist/typed-events';
 
 import logger from '@/shared/logger.service';
 import { handleError } from '@/shared/errors/error.service';
@@ -7,11 +13,27 @@ import { RoomService } from '@/app/features/room/room.service';
 import { NotFoundError } from '@/shared/errors/not-found.error';
 import { UserService } from '@/app/features/user/user.service';
 import { ChatroomService } from '@/app/features/chatroom/chatroom.service';
+import { io } from '@/shared/socket/socket';
 
 export class ChatroomController {
   private readonly service = new ChatroomService();
   private readonly roomService = new RoomService();
   private readonly userService = new UserService();
+  private sockets: Socket[] = [];
+
+  constructor() {
+    io.on('connection', (socket) => {
+      this.sockets.push(socket);
+
+      socket.on('disconnect', () => {
+        logger.debug('user disconnected', socket);
+      });
+
+      socket.on('chat message', ({ userId, roomId, message }) => {
+        this.sendMessage(roomId, userId, message);
+      });
+    });
+  }
 
   public async find(req: Request, res: Response): Promise<void> {
     logger.debug('finding chatroom');
@@ -48,13 +70,7 @@ export class ChatroomController {
           userId
         );
 
-        const contains = chatroom?.usersId?.some(
-          (it) => it.toString() === userId
-        );
-
-        return res.status(httpStatusCode.OK).json({
-          success: isLeaving ? !contains : contains,
-        });
+        return res.status(httpStatusCode.OK).json(chatroom);
       }
 
       if (!isValidUser) {
@@ -65,5 +81,52 @@ export class ChatroomController {
     } catch (error) {
       handleError(req, res, error);
     }
+  }
+
+  public async sendMessage(
+    roomId: string,
+    userId: string,
+    text: string
+  ): Promise<void> {
+    logger.debug('sending message');
+
+    try {
+      const isValidRoom = this.roomService.exists(roomId);
+      const isValidUser = this.userService.exists(userId);
+      const message = {
+        userId,
+        text,
+      };
+
+      if (isValidRoom && isValidUser) {
+        const chatroom = await this.service.sendMessage(roomId, message);
+
+        this.emit('updated chatroom', chatroom);
+        return;
+      }
+
+      if (!isValidUser) {
+        this.emit('updated messages with error', {
+          error: new NotFoundError('User does not exist'),
+        });
+        return;
+      }
+
+      this.emit('updated messages with error', {
+        error: new NotFoundError('Room does not exist'),
+      });
+    } catch (error) {
+      logger.error(error);
+      this.emit('updated messages with error', {
+        error,
+      });
+    }
+  }
+
+  private emit(
+    message: string,
+    ...args: EventParams<EventsMap, EventNames<EventsMap>>
+  ) {
+    this.sockets.forEach((socket) => socket.emit(message, ...args));
   }
 }

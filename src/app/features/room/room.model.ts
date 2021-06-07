@@ -15,7 +15,7 @@ const schema = new Schema(
     },
     ownerId: {
       type: Schema.Types.ObjectId,
-      required: true,
+      ref: ModelEnum.USER,
     },
   },
   {
@@ -27,9 +27,9 @@ const schema = new Schema(
 
 schema.virtual('owner', {
   ref: ModelEnum.USER,
-  localField: 'owner',
+  localField: 'ownerId',
   foreignField: '_id',
-  options: { sort: { username: -1 } },
+  justOne: true,
 });
 
 export const roomModel = model<Room>(ModelEnum.ROOM, schema);

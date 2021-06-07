@@ -1,6 +1,7 @@
 import logger from '@/shared/logger.service';
 import { chatroomModel } from './chatroom.model';
 import { Chatroom } from '@/app/features/chatroom/chatroom';
+import { MessageType } from '@/shared/types/MessageType';
 
 export class ChatroomService {
   /**
@@ -27,7 +28,7 @@ export class ChatroomService {
     logger.debug(
       'Join in the chatroom: roomId -> ',
       roomId,
-      ` roomId -> ${userId}`
+      ` userId -> ${userId}`
     );
 
     let query: {
@@ -48,6 +49,27 @@ export class ChatroomService {
         { roomId },
         {
           ...query,
+          roomId,
+        },
+        { lean: true, upsert: true, new: true }
+      )
+      .exec();
+  }
+
+  /**
+   * Send message
+   */
+  public sendMessage(
+    roomId: string,
+    message: MessageType
+  ): Promise<Chatroom | null> {
+    logger.debug('Sending message: roomId -> ', roomId);
+
+    return chatroomModel
+      .findOneAndUpdate(
+        { roomId },
+        {
+          $push: { messages: message },
           roomId,
         },
         { lean: true, upsert: true, new: true }

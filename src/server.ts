@@ -1,4 +1,4 @@
-import app from '@/app';
+import { app } from '@/app';
 import { properties } from '@/properties';
 import logger from '@/shared/logger.service';
 

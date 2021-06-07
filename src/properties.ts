@@ -1,6 +1,6 @@
 export const properties = {
   server: {
-    port: process.env.PORT || 3001,
+    port: process.env.PORT || 3000,
   },
   mongo: {
     host: process.env.MONGODB_HOST || 'localhost',
