@@ -1,0 +1,75 @@
+.al-input {
+    --width: 100%;
+    --padding: .5;
+
+    width: var(--width);
+}
+
+.al-input .al-input-box {
+    background: none;
+    border: none;
+    border-radius: 0;
+    border-bottom: .15rem solid var(--muted-color);
+    color: var(--muted-color);
+    display: block;
+    font-size: 1.2rem;
+    padding: var(--padding) em;
+    transition: all 300ms linear;
+    width: var(--width);
+}
+
+.al-input .al-input-box:focus {
+    outline: none;
+}
+
+.al-input .invalid-message {
+    color: var(--danger);
+    font-size: .8rem;
+    margin-top: .2rem;
+}
+
+.al-input .al-input-box:focus,
+.al-input .al-input-box.valid,
+.al-input .al-input-box.invalid {
+    border-bottom-color: var(--blue);
+}
+
+.al-input .al-input-box:focus ~ .al-input-label,
+.al-input .al-input-box.valid ~ .al-input-label,
+.al-input .al-input-box.invalid ~ .al-input-label {
+    margin-top: -3rem;
+}
+
+.al-input .al-input-box:focus ~ .al-input-label {
+    color: var(--blue);
+}
+
+.al-input .al-input-box.valid {
+    border-bottom-color: var(--green);
+}
+
+.al-input .al-input-box.valid ~ .al-input-label {
+    color: var(--green);
+}
+
+.al-input .al-input-box.invalid {
+    border-bottom-color: var(--red);
+
+}
+
+.al-input .al-input-box.invalid ~ .al-input-label {
+    color: var(--red);
+}
+
+.al-input .al-input-box[type='password'] {
+    letter-spacing: .3em;
+}
+
+.al-input .al-input-label {
+    color: var(--muted-color);
+    font-size: 1rem;
+    font-weight: normal;
+    margin-top: -1.5rem;
+    pointer-events: none;
+    position: absolute;
+}

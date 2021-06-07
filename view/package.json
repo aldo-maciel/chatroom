@@ -1,0 +1,52 @@
+{
+    "name": "chatroom",
+    "title": "chatroom",
+    "version": "0.1.0",
+    "author": "Aldo Bernardes Maciel",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "test": "jest --config ./jest.config.js"
+    },
+    "dependencies": {
+        "axios": "0.21.1",
+        "core-js": "3.6.4",
+        "css.gg": "1.0.6",
+        "normalize.css": "^8.0.1",
+        "socket.io-client": "^4.1.2",
+        "toastr": "2.1.4",
+        "tslib": "^1.11.1",
+        "vue": "2.6.13",
+        "vue-class-component": "7.2.6",
+        "vue-i18n": "8.24.4",
+        "vue-property-decorator": "9.1.2",
+        "vue-router": "3.5.1"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.10.4",
+        "@types/chai": "^4.2.8",
+        "@types/jest": "^25.2.3",
+        "@types/sinon": "^9.0.4",
+        "@types/toastr": "^2.1.37",
+        "@types/vue": "2.0.0",
+        "@typescript-eslint/eslint-plugin": "^3.0.0",
+        "@vue/cli-plugin-babel": "~4.3.1",
+        "@vue/cli-plugin-e2e-nightwatch": "~4.3.1",
+        "@vue/cli-plugin-router": "~4.3.1",
+        "@vue/cli-plugin-typescript": "^4.3.1",
+        "@vue/cli-service": "4.5.13",
+        "@vue/test-utils": "^1.0.3",
+        "babel-core": "7.0.0-bridge.0",
+        "chai": "^4.1.2",
+        "chromedriver": "80",
+        "geckodriver": "^1.19.1",
+        "jest": "^25.5.4",
+        "prettier": "^2.0.5",
+        "sinon": "^9.0.2",
+        "ts-jest": "^25.5.1",
+        "typescript": "3.8.3",
+        "vue-jest": "^3.0.6",
+        "vue-template-compiler": "^2.6.11"
+    }
+}

@@ -1,0 +1,10 @@
+.users {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 900px) {
+    .created-at {
+        display: none;
+    }
+}

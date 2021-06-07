@@ -1,0 +1,49 @@
+.navbar {
+    align-items: center;
+    background: linear-gradient(0deg, var(--gray-100) 10%, var(--info));
+    clip-path: polygon(
+            0 0,
+            100% 0,
+            100% 100%,
+            0 calc(100% - 10vw)
+    );
+    display: flex;
+    height: 30vh;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.navbar a {
+    margin: unset;
+    padding: unset;
+}
+
+.navbar-title {
+    color: var(--white);
+    font-family: Jamrul, sans-serif, serif;
+    font-size: 2rem;
+    letter-spacing: .2rem;
+    text-transform: uppercase;
+}
+
+.navbar-link {
+    font-weight: bold;
+    color: var(--purple);
+    outline: none;
+    padding-left: 1rem;
+    text-decoration: none;
+}
+
+.navbar-items {
+    display: flex;
+}
+
+.navbar-items button {
+    min-width: 150px;
+}
+
+.navbar .navbar-active-link .btn-text {
+    border-bottom: .1rem solid var(--gray-600);
+    padding-bottom: .5rem;
+    transition: all .200s ease-in;
+}

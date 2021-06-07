@@ -1,0 +1,89 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.home .chat,
+.home .rooms {
+    background-color: var(--gray-200);
+    box-shadow: var(--shadow);
+    border-radius: 1rem 0 0 1rem;
+    justify-content: center;
+    max-height: 50vh;
+    list-style: none;
+    overflow: auto;
+}
+
+.home .rooms ul {
+    list-style: none;
+}
+
+.home .rooms ul li {
+    border-radius: .5rem;
+    cursor: pointer;
+    padding: .5rem;
+}
+
+.home .rooms ul li.selected {
+    background-color: var(--teal);
+}
+
+.home .rooms ul li:hover {
+    background-color: var(--info);
+}
+
+.home .chat {
+    flex: 1;
+    border-radius: 0 1rem 1rem 0;
+}
+
+.home .chat > .row {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.home .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.home .column {
+    align-items: center;
+    display: flex;
+    margin: .5rem;
+    min-width: 150px;
+    padding: .5rem;
+}
+
+.flex-end {
+    justify-content: flex-end;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.home .grow-1 {
+    flex: 1;
+}
+
+.home .grow-2 {
+    flex: 2;
+}
+
+.home .grow-3 {
+    flex: 3;
+}
+
+.home .grow-4 {
+    flex: 4;
+}
+
+.home .grow-5 {
+    flex: 5;
+}
+

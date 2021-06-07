@@ -1,0 +1,47 @@
+{
+  "general": {
+    "noResults": "not found results",
+    "success": "success",
+    "successOperation": "operation performed successfully",
+    "error": "error",
+    "errorOperation": "an error occurred in the operation",
+    "copy": "copy"
+  },
+  "navBar": {
+    "users": "users",
+    "rooms": "rooms",
+    "generate": "chatroom"
+  },
+  "home": {
+    "title": "Let's chat",
+    "invalidaUrl": "Invalid Url",
+    "generate": "generate",
+    "typeUrl": "type or paste an url here",
+    "noMessages": "No messages here ;( <div> Start chatting below :)</div> ",
+    "chatPlaceholder": "Type your message here...."
+  },
+  "users": {
+    "title": "Users",
+    "readonly": "Readonly",
+    "admin": "Admin",
+    "createdAt": "Creation",
+    "username": "Username"
+  },
+  "rooms": {
+    "title": "Rooms",
+    "capacity": "Capacity",
+    "owner": "Owner",
+    "createdAt": "Creation",
+    "name": "Room",
+    "notFoundOwner": "Not found"
+  },
+  "pagination": {
+    "showing": "showing",
+    "from": "from",
+    "until": "until",
+    "first": "first",
+    "last": "last",
+    "next": "next",
+    "previous": "previous"
+  }
+}

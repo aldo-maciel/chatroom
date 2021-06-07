@@ -1,0 +1,111 @@
+@import "~normalize.css";
+@import 'shared/components/style/variable.css';
+@import '~toastr/build/toastr.min.css';
+@import '~css.gg/icons-compressed/icons.css';
+
+html {
+    height: 100vh;
+    overflow: hidden;
+    width: 100vw;
+}
+
+.app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    height: 100vh;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead tr:hover,
+.table tbody tr:hover {
+    background-color: rgba(236, 236, 247, .73);
+}
+
+.table thead tr:nth-child(odd) td,
+.table tbody tr:nth-child(odd) td {
+    background-color: rgba(236, 236, 247, .43);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    white-space: nowrap;
+}
+
+.table tr th,
+.table tr td {
+    padding: .5rem;
+}
+
+.table tr th:not(.text-center),
+.table tr td:not(.text-center) {
+    text-align: start;
+}
+
+.table tr th {
+    border-bottom: .15rem solid lightgray;
+}
+
+.table thead tr:hover {
+    background-color: transparent;
+}
+
+.layout {
+    background-color: var(--gray-100);
+    border: none;
+    border-radius: .5rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex: auto;
+    justify-content: center;
+    margin: -7rem 5%;
+    padding: 5rem;
+    overflow: auto;
+    position: relative;
+    z-index: 9999;
+}
+
+.drain-enter-active,
+.drain-leave-active,
+.slither-enter-active,
+.slither-leave-active {
+    transition: transform 300ms;
+}
+
+.drain-enter,
+.drain-leave-to,
+.slither-enter,
+.slither-leave-to {
+    transform: translateY(200%);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--gray-100);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-400);
+}
