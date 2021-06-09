@@ -1,0 +1,27 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "chat-app-aldo"
+          heroku_email: "aldo-maciel@hotmail.com"
+          usedocker: true
+          docker_build_args: |
+            NODE_ENV
+            MONGODB_HOST
+            MONGODB_PORT
+
+        env:
+          NODE_ENV: production
+          MONGODB_HOST: mongo
+          MONGODB_PORT: 27018
