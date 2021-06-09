@@ -6,8 +6,8 @@
   "scripts": {
     "build": "npm run --prefix view build && tsc && tscpaths -p tsconfig.json -s ./src",
     "dev": "nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register src/server.ts' -e ts",
-    "start": "NODE_ENV=production node ./dist/server.js --open",
-    "prod": "npm run build && npm run start",
+    "start:local": "NODE_ENV=production node ./dist/server.js --open",
+    "start": "npm run build && npm run start:local",
     "test": "NODE_ENV=test PORT=3052 mocha",
     "coverage": "nyc npm test",
     "rabbitmq": "docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 --restart=always --hostname rabbitmq-master -v /docker/rabbitmq/data:/var/lib/rabbitmq rabbitmq:3-management"
