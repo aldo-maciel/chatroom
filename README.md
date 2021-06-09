@@ -2,7 +2,7 @@
 
 ### Description
 
-An application to make a URL shorter
+Chat App
 
 ---
 
@@ -27,27 +27,6 @@ An application to make a URL shorter
 
 ---
 
-### Models
-
-- **shortenedUrl**
-    - **shortUrl**: String - required
-    - **originalUrl**: String - required
-    - **createdAt**: Date - Auto managed
-    - **updatedAt**: Date - Auto managed
-
----
-
-### Routes
-
-Base: /api/v1/
-
-- **/shortened-url**
-    - public
-        - **/shortened-url** - POST - (Create a new short URL)
-        - **/shortened-url** - GET - (FindAll)
-
----
-
 ### Environment
 
 |   Variable     | Description         |  default      |
@@ -60,58 +39,7 @@ Base: /api/v1/
 | LOG_DAYS       | Days to keep logs   |  15           |
 | LOG_PATH       | path to save logs   |  logs/        |
 | MAX_LENGTH_URL | max URl short length|  8            |
-
----
-
-### Examples
-
----
-
-##### Creating new short url
-
-POST - http://localhost:3001/api/v1/shortened-url
-
-- body
-    ```json
-   {
-     "originalUrl": "http://localhost:3005/#/history"
-   }
-    ```
-- payload
-    ```json
-    {
-      "createdAt": "2020-07-13T06:36:52.513Z",
-      "originalUrl": "http://localhost:3005/#/history",
-      "shortUrl": "https://pbid.io/6r0th42h",
-      "updatedAt": "2020-07-13T06:36:52.513Z",
-      "_id": "5f0c0104dc2fce0015eb81af"
-    }
-    ```
-
----  
-
-##### Login with crated URL
-
-GET - http://localhost:3001/api/v1/shortened-url
-
-- params
-    ```text
-     start=0
-     step=10
-    ```
-- payload
-    ```json
-    {
-      "data": [{
-          "_id": "5f0c0104dc2fce0015eb81af",
-          "originalUrl": "http://localhost:3005/#/history", 
-          "shortUrl": "https://pbid.io/6r0th42h", 
-          "createdAt": "2020-07-13T06:36:52.513Z",
-          "updatedAt":"2020-07-13T06:36:52.513Z"
-      }],
-      "count":1
-    }
-    ```
+| RABBIT_MQ      | rabbintmq url       |  amqp://localhost |
 
 ---
 
@@ -120,7 +48,22 @@ GET - http://localhost:3001/api/v1/shortened-url
 - typescript@3.8.3
 - node@12.16.1
 - mongoose@5.9.6
-- ws@7.2.3
+- socket.io@5.x.x
 - express@4.17.1
 - mocha@7.1.1
 - MongoDB@3.6.3
+- Rabbitmp@3
+
+```
+# Mandatory Requirements Meet
+- [x] Register and login of users.
+- [x] Allow message commands such as: /stock=stock_code
+- [x] Decoupled bot using RabbitMQ
+- [x] Bot parses the CSV and return the stack in format “APPL.US quote is $93.42 per share”
+- [x] Messages ordered by timestamp and limit is 50 messages
+
+# Bonus
+- [X] Have more than a chat room
+- [X] Unit testing
+- [x] Handle messages that are not understood by the bot.
+
