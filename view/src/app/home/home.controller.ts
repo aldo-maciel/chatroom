@@ -1,10 +1,10 @@
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { io } from 'socket.io-client';
 
 import AlButton from '@/shared/components/button/button.vue';
 import AlInput from '@/shared/components/forms/input/al-input.vue';
 import { HomeService } from '@/app/home/home.service';
-import { Chatroom } from '@/app/home/chatroom';
+import { Chatroom, MessageType } from '@/app/home/chatroom';
 import { RoomService } from '@/app/rooms/room.service';
 import { Room } from '@/app/rooms/room';
 import { Pagination } from '@/shared/components/paginate/paginate.type';
@@ -20,6 +20,7 @@ const socket = io('http://localhost:3000');
 export default class HomeController extends Vue {
   private readonly service = new HomeService();
   private readonly roomService = new RoomService();
+  private botMessages: Map<string, MessageType[]> = new Map();
   rooms: Room[] = [];
   chatroom = {} as Chatroom;
   selectedRoom: Room = {} as Room;
@@ -35,8 +36,41 @@ export default class HomeController extends Vue {
     this.rooms = data;
 
     socket.on('updated chatroom', (chatroom) => {
-      console.log(chatroom);
-      this.chatroom = chatroom;
+      if (chatroom.roomId === this.chatroom.roomId) {
+        this.chatroom = chatroom;
+        this.chatroom.messages.push(
+          ...(this.botMessages.get(chatroom.roomId) || ([] as MessageType[]))
+        );
+        this.chatroom.messages.sort(
+          (it1, it2) =>
+            new Date(it1.date).getTime() - new Date(it2.date).getTime()
+        );
+      }
+    });
+
+    socket.on('updated chatroom bot', (message) => {
+      if (message.roomId === this.chatroom.roomId) {
+        this.addBotMessage(message, message.roomId);
+        this.chatroom.messages.push(message);
+      }
+    });
+
+    socket.on('updated messages with error', (message) => {
+      if (message.roomId === this.chatroom.roomId) {
+        this.addBotMessage(message, message.roomId);
+        this.chatroom.messages.push(message);
+      }
+    });
+  }
+
+  @Watch('chatroom', { immediate: true, deep: true })
+  private scrollToBottom() {
+    setTimeout(() => {
+      const container = this.$refs.chatContainer as HTMLElement;
+
+      if (container) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
     });
   }
 
@@ -45,15 +79,27 @@ export default class HomeController extends Vue {
 
     this.chatroom = await this.service.find(
       room._id,
-      '60bd1273a48309910aaf28a9'
+      '60bea13f5f061c3d9ff46624'
     );
   }
 
   sendMessage(): void {
-    socket.emit('chat message', {
-      message: this.currentText,
-      userId: '60bd1273a48309910aaf28a9',
-      roomId: this.selectedRoom._id,
-    });
+    if (this.currentText) {
+      socket.emit('chat message', {
+        message: this.currentText,
+        userId: '60bea13f5f061c3d9ff46624',
+        roomId: this.selectedRoom._id,
+      });
+      this.currentText = '';
+    }
+  }
+
+  addBotMessage(message: MessageType, roomId: string): void {
+    const botMessage = this.botMessages.get(roomId);
+    if (botMessage) {
+      botMessage.push(message);
+      return;
+    }
+    this.botMessages.set(roomId, [message]);
   }
 }

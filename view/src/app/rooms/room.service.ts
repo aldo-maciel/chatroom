@@ -12,8 +12,13 @@ export class RoomService extends ServiceFacade {
     return 'rooms';
   }
 
-  create(originalUrl: string): Promise<Room> {
-    return this.doPost<Room>(RoomService.URL, { originalUrl });
+  create(room: Room): Promise<Room> {
+    const userId = '60bea13f5f061c3d9ff46624';
+
+    if (userId) {
+      return this.doPost<Room>(`${RoomService.URL}/${userId}`, room);
+    }
+    return this.doPost<Room>(RoomService.URL, room);
   }
 
   findAll(pagination: Pagination): Promise<ResultType> {

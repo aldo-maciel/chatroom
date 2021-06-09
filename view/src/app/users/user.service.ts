@@ -12,8 +12,12 @@ export class UserService extends ServiceFacade {
     return 'users';
   }
 
-  create(originalUrl: string): Promise<User> {
-    return this.doPost<User>(UserService.URL, { originalUrl });
+  login(username: string, password: string): Promise<User> {
+    return this.doGet<User>(UserService.URL, { username, password });
+  }
+
+  create(user: User): Promise<User> {
+    return this.doPost<User>(UserService.URL, user);
   }
 
   findAll(pagination: Pagination): Promise<ResultType> {

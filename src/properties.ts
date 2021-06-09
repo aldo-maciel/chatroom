@@ -14,5 +14,11 @@ export const properties = {
   },
   general: {
     masLengthUrl: parseInt(process.env.MAX_LENGTH_URL || '8', 10),
+    stockUrl(stockCode: string): string {
+      return `https://stooq.com/q/l/?s=${stockCode}&f=sd2t2ohlcv&h&e=csv`;
+    },
+  },
+  rabbitMq: {
+    url: process.env.RABBIT_MQ || 'amqp://localhost',
   },
 };

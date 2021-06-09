@@ -35,12 +35,8 @@ export class ServiceFacade {
 
       return data;
     } catch (error) {
-      toastr.error(
-        error.message || 'An operation occurred with error!',
-        'Error'
-      );
+      throw error;
     }
-    return Promise.reject<T>();
   }
 
   /**

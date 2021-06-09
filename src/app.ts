@@ -7,6 +7,7 @@ import handleError from '@/shared/errors/error.service';
 import { RoutesMiddleware } from '@/config/router.config';
 import { MongoConfig } from '@/config/mongo.config';
 import { initSocketServer } from '@/shared/socket/socket';
+import { rabbitMq, RabbitmqConfig } from '@/config/rabbitmq.config';
 
 const isNotTestEnvironment = process.env.NODE_ENV !== 'test';
 
@@ -30,6 +31,7 @@ class App {
     if (isNotTestEnvironment) {
       await new MongoConfig().mongoSetup();
     }
+    rabbitMq.consumer();
     new RoutesMiddleware().config(this.app);
   }
 }

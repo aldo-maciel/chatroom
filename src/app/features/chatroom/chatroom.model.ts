@@ -18,7 +18,7 @@ const schema = new Schema(
       {
         date: { type: Date, default: Date.now },
         text: { type: String },
-        userId: { type: String },
+        user: { type: String },
       },
     ],
   },
@@ -33,6 +33,7 @@ schema.virtual('users', {
   ref: ModelEnum.USER,
   localField: 'usersId',
   foreignField: '_id',
+  options: { sort: { username: -1 } },
 });
 
 schema.virtual('room', {

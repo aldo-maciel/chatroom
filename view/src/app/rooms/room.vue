@@ -1,6 +1,12 @@
 <template>
-  <div class="layout users">
-    <h2>{{ $t("rooms.title") }}</h2>
+  <div class="layout rooms">
+    <div class="flex grow-1">
+      <h2 class="grow-1 text-center">{{ $t("rooms.title") }}</h2>
+      <al-button variation="link" @click="addNew" class="text-center">
+        <em class="gg-add mx-1" />
+        <span>{{ $t("general.new") }}</span>
+      </al-button>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -44,6 +50,22 @@
         </tr>
       </tfoot>
     </table>
+    <vue-js-modal name="addNew">
+      <div class="column flex-center p-2">
+        <form @submit.prevent="save">
+          <div class="row m-2">
+            <al-input v-model="record.roomName" :label="$t('rooms.name')" required />
+          </div>
+          <div class="row m-2">
+            <al-input v-model="record.capacity" :label="$t('rooms.capacity')" type="number" />
+          </div>
+          <div class="flex m-2 flex-end">
+            <al-button type="button" variation="link" @click="onCloseModal">{{ $t("general.cancel") }}</al-button>
+            <al-button type="submit" variation="primary">{{ $t("general.save") }}</al-button>
+          </div>
+        </form>
+      </div>
+    </vue-js-modal>
   </div>
 </template>
 <style lang="css" src="./room.css" />

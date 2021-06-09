@@ -2,6 +2,7 @@ import logger from '@/shared/logger.service';
 import { userModel } from './user.model';
 import { User } from '@/app/features/user/user';
 import { IPagination, Pagination } from '@/shared/pagination/pagination';
+import { Utils } from '@/shared/utils/utils';
 
 export class UserService {
   /**
@@ -28,10 +29,34 @@ export class UserService {
   }
 
   /**
+   * Find by id
+   */
+  public login(username: string, password: string): Promise<User | null> {
+    logger.debug('login: ', username);
+
+    return userModel
+      .findOne(
+        { username, password: Utils.encrypt(password) },
+        { password: 0 },
+        { lean: true }
+      )
+      .exec();
+  }
+
+  /**
+   * Find by id
+   */
+  public findById(id: string): Promise<User | null> {
+    logger.debug('Exists User: ', id);
+
+    return userModel.findById(id, { password: 0 }, { lean: true }).exec();
+  }
+
+  /**
    * Exists on the database
    */
   public exists(id: string): Promise<boolean> {
-    logger.debug('Exists room: ', id);
+    logger.debug('Exists User: ', id);
 
     return userModel.exists({ _id: id });
   }

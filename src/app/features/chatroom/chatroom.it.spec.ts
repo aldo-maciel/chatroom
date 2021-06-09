@@ -5,7 +5,7 @@ import http from '../../../server';
 
 use(chaiHttp);
 
-describe('Chatroom', () => {
+xdescribe('Chatroom', () => {
   const originalUrl = 'https://test.com';
   const base = '/api/v1/users';
 
@@ -19,7 +19,7 @@ describe('Chatroom', () => {
     const res = await request(http).post(base);
 
     expect(res.error.text).to.contain(
-      '{"message":"originalUrl param is mandatory"}'
+      '{"message":"username param is mandatory"}'
     );
   });
 

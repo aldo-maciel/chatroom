@@ -1,3 +1,4 @@
+RUN docker pull rabbitmq:3-management
 FROM node:14.16.1-alpine
 MAINTAINER Aldo Bernardes Maciel
 

@@ -1,8 +1,10 @@
 import { model, Schema } from 'mongoose';
+import crypto from 'crypto';
+import uuid from 'uuid';
 
 import { ModelEnum } from '@/shared/enums/model.enum';
 import { User } from '@/app/features/user/user';
-import crypto from 'crypto';
+import { Utils } from '@/shared/utils/utils';
 
 const schema = new Schema(
   {
@@ -34,9 +36,21 @@ const schema = new Schema(
 );
 
 schema.post('validate', (doc) => {
-  const salt = crypto.randomBytes(16).toString('hex');
-
-  doc.password = crypto.scryptSync(doc.password, salt, 512).toString('hex');
+  doc.password = Utils.encrypt(doc.password);
 });
 
 export const userModel = model<User>(ModelEnum.USER, schema);
+userModel.findOneAndUpdate(
+  {
+    username: 'BOT',
+  },
+  {
+    username: 'BOT',
+    admin: true,
+    readonly: true,
+    password: uuid.v4(),
+  },
+  {
+    upsert: true,
+  }
+);

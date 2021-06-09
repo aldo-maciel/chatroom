@@ -13,7 +13,7 @@ export class ChatroomService {
     return chatroomModel
       .findById(roomId, null, { lean: true })
       .populate('room')
-      .populate('users', { password: 0 })
+      .populate('users')
       .exec();
   }
 
@@ -46,7 +46,9 @@ export class ChatroomService {
 
     return chatroomModel
       .findOneAndUpdate(
-        { roomId },
+        {
+          roomId,
+        },
         {
           ...query,
           roomId,
@@ -67,9 +69,13 @@ export class ChatroomService {
 
     return chatroomModel
       .findOneAndUpdate(
-        { roomId },
         {
-          $push: { messages: message },
+          roomId,
+        },
+        {
+          $push: {
+            messages: message,
+          },
           roomId,
         },
         { lean: true, upsert: true, new: true }

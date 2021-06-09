@@ -1,6 +1,12 @@
 <template>
   <div class="layout users">
-    <h2>{{ $t("users.title") }}</h2>
+    <div class="title">
+      <h2 class="grow-1 text-center">{{ $t("users.title") }}</h2>
+      <al-button variation="link" @click="addNew" class="text-center">
+        <em class="gg-add mx-1" />
+        <span>{{ $t("general.new") }}</span>
+      </al-button>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -39,6 +45,28 @@
         </tr>
       </tfoot>
     </table>
+    <vue-js-modal name="addNew">
+      <div class="column flex-center p-2">
+        <form @submit.prevent="saveUser">
+          <div class="row m-2">
+            <al-input v-model="currentUser.username" :label="$t('users.username')" required />
+          </div>
+          <div class="row m-2">
+            <al-input v-model="currentUser.password" :label="$t('users.password')" type="password" required />
+          </div>
+          <div class="row m-2">
+            <label class="text-center">
+              <input v-model="currentUser.readonly" type="checkbox" />
+              {{ $t("users.readonly") }}
+            </label>
+          </div>
+          <div class="flex m-2 flex-end">
+            <al-button type="button" variation="link" @click="onCloseModal">{{ $t("general.cancel") }}</al-button>
+            <al-button type="submit" variation="primary">{{ $t("general.save") }}</al-button>
+          </div>
+        </form>
+      </div>
+    </vue-js-modal>
   </div>
 </template>
 <style lang="css" src="./user.css" />

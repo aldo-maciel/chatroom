@@ -14,6 +14,8 @@ import { NotFoundError } from '@/shared/errors/not-found.error';
 import { UserService } from '@/app/features/user/user.service';
 import { ChatroomService } from '@/app/features/chatroom/chatroom.service';
 import { io } from '@/shared/socket/socket';
+import { rabbitMq } from '@/config/rabbitmq.config';
+import { Utils } from '@/shared/utils/utils';
 
 export class ChatroomController {
   private readonly service = new ChatroomService();
@@ -26,10 +28,11 @@ export class ChatroomController {
       this.sockets.push(socket);
 
       socket.on('disconnect', () => {
-        logger.debug('user disconnected', socket);
+        logger.debug('user disconnected');
       });
 
       socket.on('chat message', ({ userId, roomId, message }) => {
+        rabbitMq.producer(userId, roomId, message);
         this.sendMessage(roomId, userId, message);
       });
     });
@@ -43,7 +46,7 @@ export class ChatroomController {
 
       const chatroom = await this.service.findByRoom(roomId);
 
-      res.status(httpStatusCode.OK).json(chatroom);
+      res.status(httpStatusCode.OK).json(Utils.limitChatroomMessages(chatroom));
     } catch (error) {
       handleError(req, res, error);
     }
@@ -70,7 +73,9 @@ export class ChatroomController {
           userId
         );
 
-        return res.status(httpStatusCode.OK).json(chatroom);
+        return res
+          .status(httpStatusCode.OK)
+          .json(Utils.limitChatroomMessages(chatroom));
       }
 
       if (!isValidUser) {
@@ -91,35 +96,41 @@ export class ChatroomController {
     logger.debug('sending message');
 
     try {
-      const isValidRoom = this.roomService.exists(roomId);
-      const isValidUser = this.userService.exists(userId);
+      if (text.startsWith('/stock')) {
+        return;
+      }
+      const isValidRoom = await this.roomService.exists(roomId);
+      const user = await this.userService.findById(userId);
       const message = {
-        userId,
+        user: user?.username ?? '',
         text,
       };
 
-      if (isValidRoom && isValidUser) {
+      if (isValidRoom && user?._id) {
         const chatroom = await this.service.sendMessage(roomId, message);
 
-        this.emit('updated chatroom', chatroom);
+        this.emit('updated chatroom', Utils.limitChatroomMessages(chatroom));
         return;
       }
 
-      if (!isValidUser) {
-        this.emit('updated messages with error', {
-          error: new NotFoundError('User does not exist'),
-        });
+      if (!user?._id) {
+        this.emit(
+          'updated messages with error',
+          Utils.createBotMessage('User does not exist', roomId)
+        );
         return;
       }
 
-      this.emit('updated messages with error', {
-        error: new NotFoundError('Room does not exist'),
-      });
+      this.emit(
+        'updated messages with error',
+        Utils.createBotMessage('Room does not exist', roomId)
+      );
     } catch (error) {
       logger.error(error);
-      this.emit('updated messages with error', {
-        error,
-      });
+      this.emit(
+        'updated messages with error',
+        Utils.createBotMessage(error, roomId)
+      );
     }
   }
 

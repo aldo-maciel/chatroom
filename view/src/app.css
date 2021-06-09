@@ -109,3 +109,73 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--gray-400);
 }
+
+.grow-1 {
+    flex: 1;
+}
+
+.grow-2 {
+    flex: 2;
+}
+
+.grow-3 {
+    flex: 3;
+}
+
+.grow-4 {
+    flex: 4;
+}
+
+.grow-5 {
+    flex: 5;
+}
+
+.mx-1 {
+    margin: 0 1rem;
+}
+
+.m-1 {
+    margin: 1rem;
+}
+
+.my-1 {
+    margin: 1rem 0;
+}
+
+.mx-2 {
+    margin: 0 2rem;
+}
+
+.m-2 {
+    margin: 2rem;
+}
+
+.py-2 {
+    padding: 2rem 0;
+}
+
+
+.px-2 {
+    padding: 0 2rem;
+}
+
+.p-2 {
+    padding: 2rem;
+}
+
+.my-2 {
+    margin: 2rem 0;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-end {
+    justify-content: flex-end;
+}
+
+.flex-center {
+    justify-content: center;
+    align-items: center;
+}

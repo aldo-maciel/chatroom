@@ -18,6 +18,16 @@ export class UserController {
 
     try {
       const params = (req.query as unknown) as IPagination;
+      const { username, password } = req.query;
+
+      if (username && password) {
+        const user = await this.service.login(
+          username as string,
+          password as string
+        );
+
+        return res.json(user);
+      }
 
       const { data, count } = await this.service.findAll(params);
 

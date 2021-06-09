@@ -5,7 +5,10 @@
     "successOperation": "operation performed successfully",
     "error": "error",
     "errorOperation": "an error occurred in the operation",
-    "copy": "copy"
+    "copy": "copy",
+    "save": "Save",
+    "cancel": "Cancel",
+    "new": "new"
   },
   "navBar": {
     "users": "users",
@@ -18,14 +21,17 @@
     "generate": "generate",
     "typeUrl": "type or paste an url here",
     "noMessages": "No messages here ;( <div> Start chatting below :)</div> ",
+    "selectARoom": "Please, select a room on the side to start chatting :) ",
     "chatPlaceholder": "Type your message here...."
   },
   "users": {
     "title": "Users",
     "readonly": "Readonly",
     "admin": "Admin",
+    "password": "password",
     "createdAt": "Creation",
-    "username": "Username"
+    "username": "Username",
+    "login": "login"
   },
   "rooms": {
     "title": "Rooms",

@@ -1,6 +1,12 @@
 .users {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.users .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media only screen and (max-width: 900px) {

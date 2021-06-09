@@ -34,20 +34,28 @@
 }
 
 .home .chat {
+    align-items: unset;
+    display: flex;
+    flex-direction: column;
     flex: 1;
     border-radius: 0 1rem 1rem 0;
-}
-
-.home .chat > .row {
-    width: 100%;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+    overflow: hidden;
 }
 
 .home .row {
     display: flex;
     flex-wrap: wrap;
+}
+
+.home .chat > .row {
+    width: 100%;
+}
+
+.home .chat .messages-container {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: auto;
 }
 
 .home .column {
@@ -58,32 +66,26 @@
     padding: .5rem;
 }
 
-.flex-end {
-    justify-content: flex-end;
-}
-
-.flex-center {
-    justify-content: center;
-    align-items: center;
-}
-
-.home .grow-1 {
+.home .messages {
+    display: flex;
+    flex-direction: column;
     flex: 1;
 }
 
-.home .grow-2 {
-    flex: 2;
+.home .messages .messages-date {
+    display: flex;
+    justify-content: flex-end;
 }
 
-.home .grow-3 {
-    flex: 3;
+.home .messages .messages-text {
+    display: flex;
+    align-items: center;
 }
 
-.home .grow-4 {
-    flex: 4;
-}
-
-.home .grow-5 {
-    flex: 5;
+.home .messages .messages-user {
+    border-radius: 1rem;
+    background-color: var(--gray-400);
+    padding: .2rem;
+    margin: .3rem;
 }
 
