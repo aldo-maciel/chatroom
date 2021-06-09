@@ -39,6 +39,7 @@ Chat App
 | LOG_DAYS       | Days to keep logs   |  15           |
 | LOG_PATH       | path to save logs   |  logs/        |
 | MAX_LENGTH_URL | max URl short length|  8            |
+| RABBIT_MQ      | rabbintmq url       |  amqp://localhost |
 
 ---
 
@@ -52,3 +53,17 @@ Chat App
 - mocha@7.1.1
 - MongoDB@3.6.3
 - Rabbitmp@3
+
+```
+# Mandatory Requirements Meet
+- [x] Register and login of users.
+- [x] Allow message commands such as: /stock=stock_code
+- [x] Decoupled bot using RabbitMQ
+- [x] Bot parses the CSV and return the stack in format “APPL.US quote is $93.42 per share”
+- [x] Messages ordered by timestamp and limit is 50 messages
+
+# Bonus
+- [X] Have more than a chat room
+- [X] Unit testing
+- [x] Handle messages that are not understood by the bot.
+
