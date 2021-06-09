@@ -4,7 +4,7 @@
   "private": true,
   "author": "Aldo Bernardes Maciel",
   "scripts": {
-    "build": "npm run --prefix view build && tsc && tscpaths -p tsconfig.json -s ./src",
+    "build": "yarn install --prefix view && npm run --prefix view build && tsc && tscpaths -p tsconfig.json -s ./src",
     "dev": "nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register src/server.ts' -e ts",
     "start:local": "NODE_ENV=production node ./dist/server.js --open",
     "start": "npm run build && npm run start:local",
