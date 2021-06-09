@@ -4,7 +4,7 @@
   "private": true,
   "author": "Aldo Bernardes Maciel",
   "scripts": {
-    "build": "tsc && tscpaths -p tsconfig.json -s ./src",
+    "build": "npm run --prefix view build && tsc && tscpaths -p tsconfig.json -s ./src",
     "dev": "nodemon --watch 'src/' --exec 'ts-node -r tsconfig-paths/register src/server.ts' -e ts",
     "start": "NODE_ENV=production node ./dist/server.js --open",
     "prod": "npm run build && npm run start",

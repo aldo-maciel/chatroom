@@ -1,4 +1,4 @@
-import amqp, { Channel } from 'amqplib/callback_api';
+import amqp, { Channel, Connection } from 'amqplib/callback_api';
 
 import { properties } from '@/properties';
 import logger from '@/shared/logger.service';
@@ -14,12 +14,13 @@ export class RabbitmqConfig {
   private readonly userService = new UserService();
   private rabbitConnection = properties.rabbitMq.url;
   private queueName = 'stock_by_code';
-  private channel: Channel | null = null;
+  private connection: Connection | null = null;
 
   consumer(): void {
     io.on('disconnected', () => this.closeConnection());
 
     amqp.connect(this.rabbitConnection, (error, connection) => {
+      this.connection = connection;
       logger.debug(
         'connecting rabbitmq',
         error || connection.getMaxListeners()
@@ -31,8 +32,6 @@ export class RabbitmqConfig {
       }
 
       connection.createChannel((err, channel) => {
-        this.channel = channel;
-
         if (err) {
           logger.error(err);
           return;
@@ -136,8 +135,8 @@ export class RabbitmqConfig {
   }
 
   closeConnection(): void {
-    this.channel?.close(() => {
-      logger.info('closed channel');
+    this.connection?.close(() => {
+      logger.info('closed connection');
     });
   }
 }

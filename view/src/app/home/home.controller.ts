@@ -8,6 +8,7 @@ import { Chatroom, MessageType } from '@/app/home/chatroom';
 import { RoomService } from '@/app/rooms/room.service';
 import { Room } from '@/app/rooms/room';
 import { Pagination } from '@/shared/components/paginate/paginate.type';
+import { User } from '@/app/users/user';
 
 const socket = io('http://localhost:3000');
 
@@ -25,6 +26,7 @@ export default class HomeController extends Vue {
   chatroom = {} as Chatroom;
   selectedRoom: Room = {} as Room;
   currentText = '';
+  user!: User;
 
   async created(): Promise<void> {
     const { data } = await this.roomService.findAll({
@@ -34,6 +36,7 @@ export default class HomeController extends Vue {
     } as Pagination);
 
     this.rooms = data;
+    this.user = JSON.parse(localStorage.getItem('user') || '{}') as User;
 
     socket.on('updated chatroom', (chatroom) => {
       if (chatroom.roomId === this.chatroom.roomId) {
@@ -77,17 +80,14 @@ export default class HomeController extends Vue {
   async selectRoom(room: Room): Promise<void> {
     this.selectedRoom = room;
 
-    this.chatroom = await this.service.find(
-      room._id,
-      '60bea13f5f061c3d9ff46624'
-    );
+    this.chatroom = await this.service.find(room._id, this.user._id);
   }
 
   sendMessage(): void {
     if (this.currentText) {
       socket.emit('chat message', {
         message: this.currentText,
-        userId: '60bea13f5f061c3d9ff46624',
+        userId: this.user._id,
         roomId: this.selectedRoom._id,
       });
       this.currentText = '';

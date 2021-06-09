@@ -13,7 +13,7 @@ export class RoomService extends ServiceFacade {
   }
 
   create(room: Room): Promise<Room> {
-    const userId = '60bea13f5f061c3d9ff46624';
+    const userId = JSON.parse(localStorage.getItem('user') || '{}')._id;
 
     if (userId) {
       return this.doPost<Room>(`${RoomService.URL}/${userId}`, room);

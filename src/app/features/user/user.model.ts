@@ -1,10 +1,8 @@
 import { model, Schema } from 'mongoose';
-import crypto from 'crypto';
-import uuid from 'uuid';
 
 import { ModelEnum } from '@/shared/enums/model.enum';
 import { User } from '@/app/features/user/user';
-import { Utils } from '@/shared/utils/utils';
+import logger from '@/shared/logger.service';
 
 const schema = new Schema(
   {
@@ -35,22 +33,27 @@ const schema = new Schema(
   }
 );
 
-schema.post('validate', (doc) => {
-  doc.password = Utils.encrypt(doc.password);
-});
-
 export const userModel = model<User>(ModelEnum.USER, schema);
-userModel.findOneAndUpdate(
-  {
-    username: 'BOT',
-  },
-  {
-    username: 'BOT',
-    admin: true,
-    readonly: true,
-    password: uuid.v4(),
-  },
-  {
-    upsert: true,
-  }
-);
+
+// TODO: just to the tests
+try {
+  logger.info('creating new users');
+  userModel
+    .findOneAndUpdate(
+      {
+        username: 'admin',
+      },
+      {
+        username: 'admin',
+        admin: true,
+        readonly: true,
+        password: '123',
+      },
+      {
+        upsert: true,
+      }
+    )
+    .exec();
+} catch (error) {
+  logger.error(error);
+}

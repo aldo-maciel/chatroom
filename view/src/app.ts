@@ -36,6 +36,7 @@ export default class App extends Vue {
           return onError('User not found!');
         }
         localStorage.setItem('user', JSON.stringify(user));
+        this.onCloseModal();
       })
       .catch(onError);
   }

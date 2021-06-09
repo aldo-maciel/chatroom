@@ -35,11 +35,7 @@ export class UserService {
     logger.debug('login: ', username);
 
     return userModel
-      .findOne(
-        { username, password: Utils.encrypt(password) },
-        { password: 0 },
-        { lean: true }
-      )
+      .findOne({ username, password }, { password: 0 }, { lean: true })
       .exec();
   }
 
